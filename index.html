@@ -71,12 +71,16 @@
     .auth-form { display: none; }
     .auth-form.active { display: block; }
 
-    .auth-admin-hint {
-      background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.2);
-      border-radius: 10px; padding: 12px 14px; margin-bottom: 20px;
-      font-size: 12px; color: var(--gray-light); line-height: 1.6;
-    }
-    .auth-admin-hint strong { color: var(--gold); }
+    /* ========== IMAGE UPLOAD ========== */
+    .img-upload-zone { border: 2px dashed var(--dark-4); border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: var(--transition); position: relative; background: var(--dark-3); }
+    .img-upload-zone:hover { border-color: var(--gold); background: rgba(201,169,110,0.05); }
+    .img-upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    .img-upload-icon { font-size: 28px; color: var(--gold); margin-bottom: 8px; }
+    .img-upload-label { font-size: 13px; color: var(--gray-light); }
+    .img-upload-sub { font-size: 11px; color: var(--gray); margin-top: 4px; }
+    .img-preview-wrap { position: relative; border-radius: 12px; overflow: hidden; margin-top: 0; background: var(--dark-3); }
+    .img-preview-wrap img { width: 100%; height: 160px; object-fit: cover; display: block; }
+    .img-preview-clear { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; border-radius: 7px; background: rgba(0,0,0,0.7); border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 2; }
 
     /* ========== FIELD GROUPS ========== */
     .field-group { margin-bottom: 16px; }
@@ -385,7 +389,128 @@
     .text-gold { color: var(--gold); }
     .text-gray { color: var(--gray); }
     .flex-wrap { flex-wrap: wrap; }
-    @media(max-width: 480px) { .products-grid { grid-template-columns: 1fr 1fr; gap: 10px; } .pay-methods { grid-template-columns: 1fr; } .auth-box { padding: 30px 20px; } }
+    /* ========== RESPONSIVE ========== */
+
+    /* --- Tablette large & desktop --- */
+    @media(min-width: 1024px) {
+      .section { padding: 90px 48px; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+      .categories-grid { grid-template-columns: repeat(6, 1fr); }
+      .contact-grid { grid-template-columns: repeat(3, 1fr); }
+      #notifPanel { width: 360px; }
+    }
+
+    /* --- Tablette --- */
+    @media(min-width: 641px) and (max-width: 1023px) {
+      .section { padding: 60px 32px; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+      .categories-grid { grid-template-columns: repeat(3, 1fr); }
+      .contact-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .admin-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* --- Mobile (jusqu'à 640px) --- */
+    @media(max-width: 640px) {
+      /* Auth */
+      .auth-box { padding: 28px 20px; border-radius: 18px; }
+      .auth-brand h1 { font-size: 24px; }
+
+      /* Header */
+      .header-brand span { font-size: 17px; letter-spacing: 1px; }
+      .header-inner { padding: 0 14px; gap: 8px; }
+      .icon-btn { width: 36px; height: 36px; font-size: 14px; }
+      .btn-admin { padding: 6px 10px; font-size: 12px; }
+      .btn-admin span { display: none; }
+
+      /* Hero */
+      .hero { min-height: 80vh; }
+      .hero-content { padding: 40px 16px; }
+      .hero h1 { font-size: clamp(32px, 9vw, 52px); }
+      .hero p { font-size: 14px; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .hero-actions button { width: 100%; max-width: 280px; }
+
+      /* Section */
+      .section { padding: 44px 16px; }
+      .section-header h2 { font-size: clamp(22px, 6vw, 32px); }
+
+      /* Products */
+      .products-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .product-body { padding: 11px; }
+      .product-name { font-size: 12px; }
+      .product-price { font-size: 16px; }
+      .btn-cart { padding: 6px 10px; font-size: 11px; }
+
+      /* Categories */
+      .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .cat-card { border-radius: 12px; }
+      .cat-icon { font-size: 22px; margin-bottom: 6px; }
+      .cat-name { font-size: 10px; }
+
+      /* Filter bar */
+      .filter-bar { gap: 6px; }
+      .filter-btn { padding: 5px 11px; font-size: 12px; }
+
+      /* Cart panel */
+      #cartPanel { width: 100vw; }
+
+      /* Modals */
+      .modal-overlay { padding: 0; align-items: flex-end; }
+      .modal-box { border-radius: 20px 20px 0 0; max-height: 92vh; }
+      .modal-box.wide { max-width: 100%; }
+
+      /* Checkout payment methods */
+      .pay-methods { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+      .pay-option { padding: 12px 6px; }
+      .pay-option i { font-size: 18px; }
+      .pay-option-name { font-size: 10px; }
+      .pay-option-sub { font-size: 9px; display: none; }
+
+      /* Admin stats */
+      .admin-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat-val { font-size: 24px; }
+
+      /* Notifications panel */
+      #notifPanel { width: calc(100vw - 32px); right: 16px; }
+
+      /* Contact form */
+      .contact-grid { grid-template-columns: 1fr; }
+      #contactPage .section div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+
+      /* Footer */
+      .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+      footer { padding: 36px 16px 24px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+
+      /* Product modal form grids */
+      .modal-body div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; gap: 0 !important; }
+
+      /* Sidebar */
+      #sidebar { width: 88vw; }
+
+      /* Admin tabs wider */
+      .auth-tabs[style*="max-width:400px"] { max-width: 100% !important; }
+
+      /* Order card */
+      .order-card-head { flex-direction: column; gap: 6px; }
+    }
+
+    /* --- Très petit écran (iPhone SE, etc.) --- */
+    @media(max-width: 380px) {
+      .products-grid { grid-template-columns: 1fr; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero h1 { font-size: 28px; }
+    }
+
+    /* Touch devices — supprimer hover transform */
+    @media(hover: none) {
+      .product-card:hover { transform: none; box-shadow: none; }
+      .cat-card:hover { transform: none; }
+      .btn-gold:hover { transform: none; box-shadow: none; }
+      .btn-solid-gold:hover { transform: none; box-shadow: none; }
+      .contact-card:hover { transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -403,9 +528,6 @@
       <button class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Inscription</button>
     </div>
     <div class="auth-form active" id="formLogin">
-      <div class="auth-admin-hint">
-        <strong>Compte Admin :</strong> Nom = <strong>admin</strong> &nbsp;|&nbsp; Code = <strong>0000</strong>
-      </div>
       <form onsubmit="handleLogin(event)">
         <div class="field-group">
           <label>Nom d'utilisateur</label>
@@ -737,8 +859,18 @@
           </div>
         </div>
         <div class="field-group">
-          <label>URL Image (optionnel)</label>
-          <input type="url" id="pImage" placeholder="https://exemple.com/photo.jpg" />
+          <label>Photo du produit</label>
+          <input type="hidden" id="pImage" />
+          <div id="imgUploadZone" class="img-upload-zone">
+            <input type="file" id="pImageFile" accept="image/*" onchange="handleImageUpload(this)" />
+            <div class="img-upload-icon"><i class="fas fa-camera"></i></div>
+            <div class="img-upload-label">Appuyez pour choisir une photo</div>
+            <div class="img-upload-sub">Depuis votre galerie ou appareil photo</div>
+          </div>
+          <div id="imgPreviewWrap" class="img-preview-wrap" style="display:none;">
+            <img id="imgPreview" src="" alt="Aperçu" />
+            <button type="button" class="img-preview-clear" onclick="clearImage()"><i class="fas fa-times"></i></button>
+          </div>
         </div>
         <div class="field-group">
           <label>Description</label>
@@ -1110,6 +1242,44 @@ function deleteOrder(id) {
 }
 
 // =====================================================================
+// IMAGE UPLOAD (base64 — stocké localement, fonctionne sans serveur)
+// =====================================================================
+function handleImageUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { showToast('Image trop lourde (max 5 Mo).', 'error'); input.value = ''; return; }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const b64 = e.target.result;
+    document.getElementById('pImage').value = b64;
+    document.getElementById('imgPreview').src = b64;
+    document.getElementById('imgUploadZone').style.display = 'none';
+    document.getElementById('imgPreviewWrap').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearImage() {
+  document.getElementById('pImage').value = '';
+  const fi = document.getElementById('pImageFile');
+  if (fi) fi.value = '';
+  document.getElementById('imgPreview').src = '';
+  document.getElementById('imgUploadZone').style.display = 'block';
+  document.getElementById('imgPreviewWrap').style.display = 'none';
+}
+
+function resetImageField(existingUrl) {
+  if (existingUrl) {
+    document.getElementById('pImage').value = existingUrl;
+    document.getElementById('imgPreview').src = existingUrl;
+    document.getElementById('imgUploadZone').style.display = 'none';
+    document.getElementById('imgPreviewWrap').style.display = 'block';
+  } else {
+    clearImage();
+  }
+}
+
+// =====================================================================
 // PRODUCT MODAL
 // =====================================================================
 function openAddProductModal() {
@@ -1117,7 +1287,9 @@ function openAddProductModal() {
   document.getElementById('productModalTitle').textContent = 'Ajouter un article';
   document.getElementById('productForm').reset();
   document.getElementById('productId').value = '';
+  document.getElementById('pCategory').value = '';
   document.getElementById('categoryHint').style.display = 'none';
+  clearImage();
   openModal('productModal');
 }
 
@@ -1133,10 +1305,10 @@ function openEditProduct(id, event) {
   document.getElementById('pCategory').value = p.category;
   document.getElementById('pPrice').value = p.price;
   document.getElementById('pStock').value = p.stock || 1;
-  document.getElementById('pImage').value = p.image || '';
   document.getElementById('pDesc').value = p.description || '';
   document.getElementById('pSizes').value = p.sizes || '';
   document.getElementById('categoryHint').style.display = 'none';
+  resetImageField(p.image || '');
   openModal('productModal');
 }
 
@@ -1147,7 +1319,7 @@ function saveProduct(e) {
   const id = editingProductId || generateId();
   const cat = document.getElementById('pCategory').value;
   if (!cat) { showToast('Veuillez choisir une catégorie.', 'error'); return; }
-  const product = { id, name: document.getElementById('pName').value.trim(), brand: document.getElementById('pBrand').value.trim(), category: cat, price: parseFloat(document.getElementById('pPrice').value), stock: parseInt(document.getElementById('pStock').value) || 1, image: document.getElementById('pImage').value.trim(), description: document.getElementById('pDesc').value.trim(), sizes: document.getElementById('pSizes').value.trim(), createdAt: editingProductId ? (products.find(p => p.id === editingProductId)?.createdAt || Date.now()) : Date.now() };
+  const product = { id, name: document.getElementById('pName').value.trim(), brand: document.getElementById('pBrand').value.trim(), category: cat, price: parseFloat(document.getElementById('pPrice').value), stock: parseInt(document.getElementById('pStock').value) || 1, image: document.getElementById('pImage').value, description: document.getElementById('pDesc').value.trim(), sizes: document.getElementById('pSizes').value.trim(), createdAt: editingProductId ? (products.find(p => p.id === editingProductId)?.createdAt || Date.now()) : Date.now() };
   if (editingProductId) { const idx = products.findIndex(p => p.id === editingProductId); if (idx !== -1) products[idx] = product; showToast('Article modifié.', 'success'); }
   else { products.push(product); showToast('Article ajouté.', 'success'); }
   saveProducts(); closeProductModal();
